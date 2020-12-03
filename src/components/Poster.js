@@ -1,6 +1,10 @@
+/* 
+ Author: Joseph M. Samake - Final project - Consensys Bootcamp Nov. 2020
+ Dev: React component to handle job poster features
+ Note: if connected to Rinkeby testnet, make sure abi has correct deployed address: 0x22E09EA75D2E179380ee06ddc48d415E349Ca7F8
+*/
 import React, { Component } from 'react';
 import Web3 from 'web3';
-//import { BN } from "web3-utils";
 import './App.css';
 import Bounty from '../abis/Bounty.json';
 
@@ -9,15 +13,12 @@ class Poster extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: 'HOME',
-      account: '',
+      account: '',     // currently connected metamask account
       bountyCount: 0,
       bountyId: 0,
-      bounties: [],
+      bounties: [],    // holds bounties create on the contract by this user
       submissions: [],
-      loading: true,
-      login: true,
-      role: ''
+      loading: true
     }
 
     // binds the function to components
@@ -30,6 +31,7 @@ class Poster extends Component {
     await this.loadBlockchainData()
   }
 
+  // connect to web3 provider
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
@@ -48,11 +50,12 @@ class Poster extends Component {
     // Load account
     const accounts = await web3.eth.getAccounts()
     console.log(accounts)
-    this.setState({ account: accounts[0] }) // i.e account connected via metamask
-    const networkId = await web3.eth.net.getId()
+    this.setState({ account: accounts[0] })       // i.e account connected via metamask
+    const networkId = await web3.eth.net.getId()  // i.e ganache or rinkeby
     const networkData = Bounty.networks[networkId]
 
     if(networkData) {
+      // insure the abi file has the correct contract address refs
       const bountyContract = web3.eth.Contract(Bounty.abi, networkData.address)
       this.setState({ bountyContract })
       //
@@ -68,6 +71,7 @@ class Poster extends Component {
   }
 
   async listMyBounties() {
+    // you should have an account connected to metamask
     if( this.state.account === '') {
       window.alert("Info: please enter your EOA to begin")
       return
@@ -81,6 +85,7 @@ class Poster extends Component {
     for (var i = 0; i < len; i++) {
       var bountyId = myList[i] 
       const bounty = await this.state.bountyContract.methods.bountyList(bountyId).call();
+      // use React construct to add each bounty found to array
       this.setState({bounties: [...this.state.bounties, bounty]})
     }
       
@@ -171,7 +176,7 @@ class Poster extends Component {
               type="number"
               ref={(input) => { this.bountyAmount = input }}
               className="form-control"
-              placeholder="Bounty Amount in ETH"
+              placeholder="Bounty amount in unit of ETH"
               required />
           </div>
           <button type="submit" className="btn btn-primary">Add Bounty</button>      

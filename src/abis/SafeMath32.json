@@ -2927,15 +2927,21 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0x577A094eB1bD6b11003D6dFc65b42CE96ac715F1",
+      "transactionHash": "0xd8e01e31d6d768c34a5d4eaa9a4f8237e89c064697e876892bac66ef0ab9390c"
+    },
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xAfD1889c0483F0303B724351dea469E3bCF3F322",
-      "transactionHash": "0x0452200fac965de10880e5c2ae646d6524b1eaea9394042ddeac4e7af649c7e9"
+      "address": "0x177BCc5f433a2764423fb4d581C1b5b9a4c59a2e",
+      "transactionHash": "0x3288aac21ad18cc5d6726229c5dea0a823a9a9b5dbbc02481c7592e5ee25860a"
     }
   },
   "schemaVersion": "3.2.5",
-  "updatedAt": "2020-12-03T11:37:08.336Z",
+  "updatedAt": "2020-12-03T19:36:47.631Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Joseph M. Samake",

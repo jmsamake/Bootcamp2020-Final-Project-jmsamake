@@ -1,0 +1,4 @@
+
+Bounty contract deployed on Rinkeby testnet
+
+contract address:    0x22E09EA75D2E179380ee06ddc48d415E349Ca7F8

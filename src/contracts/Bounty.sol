@@ -4,9 +4,9 @@ import "./SafeMath32.sol";
 import "./SafeMath256.sol";
 
 /// @title A contract to handle bounties for work items
-/// @author Joseph M. Samake for Consensys Bootcamp 2020
+/// @author Joseph M. Samake - Final project - Consensys Bootcamp Nov. 2020
 /// @notice You can use this contract only for demo purposes
-/// @dev this contract implements a circuit-braker pattern
+/// @dev this contract implements a circuit-braker pattern and SafeMath libs
 contract Bounty {
 
   using SafeMath32 for uint32;
@@ -63,7 +63,7 @@ contract Bounty {
     uint256 payoutAmount  
   );
   
-  // emitted when a work bounty is accepted by a poster
+  // emitted when a work bounty is accepted by a submitter
   event WorkAccepted(
     uint32 _bountyId,
     address indexed submitter
@@ -88,7 +88,7 @@ contract Bounty {
   modifier stopInEmergency { require(!stopped); _; }
   // applies to function can operate while in emergency stop
   modifier onlyInEmergency { require(stopped); _; }
-  // applies to a payable function to insure that enough value was sent for the transaction.
+  // applies to acceptWork function to insure that enough value was sent to cover the bounty.
   modifier paidEnough(uint256 _amount) { 
     require(msg.value >= _amount); 
     _; 
@@ -98,7 +98,7 @@ contract Bounty {
 		 owner = msg.sender;
   }
 
-  // accepts eth funds by default; used as an escrow to hold bounty poster funds
+  // accepts eth funds by default; used as an escrow to hold bounty posters funds
   function () external payable {}
 
 
@@ -167,7 +167,7 @@ contract Bounty {
 
   /// @notice retrieves the number of submissions posted for a given work bounty
   /// @dev WorkSubmission[] is a dynamic array, so we must get length at runtime
-  /// @param _bountyid: the id of the work bounty be considered
+  /// @param _bountyid: the id of the work bounty being considered
   /// @return uint32: the number of work submissions for a given work bounty
   function getNumberOfSubsForBounty(uint32 _bountyid) public view returns (uint32) {
     WorkSubmission[] storage tp  = submissionList[_bountyid];
@@ -219,7 +219,7 @@ contract Bounty {
 
 
   /// @notice allows a bounty hunter to withdraw his cumulated earnings
-  /// @dev We're using a Pull instead of Push pattern, allowing job hunters to withdraw their earnings on demand
+  /// @dev We're using a Pull instead of a Withdrawal pattern, allowing job hunters to withdraw their earnings on demand
   /// @return uint256: payout just withdrawn expressed in unit of currency
   function withdrawMyPayout() public returns (uint256) {
      

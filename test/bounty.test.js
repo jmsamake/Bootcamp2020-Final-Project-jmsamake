@@ -1,6 +1,7 @@
 /*
 
-The public version of the file used for testing can be found here: 
+/// @title testing file for Bounty contract
+/// @author Joseph M. Samake - Final project - Consensys Bootcamp Nov. 2020
 
 */
 
@@ -22,19 +23,14 @@ contract('Bounty', function(accounts) {
 
     let instance
 
-    /*before(async () => {
-	    instance = await Bounty.deployed()
-	}) */
-
     // create a new contract b4 each test run
     beforeEach(async () => {
-        //instance = await Bounty.new()
-        //await instance.sendTransaction({from: owner, value: 5*10**18});
         instance = await Bounty.new()
     }) 
 
+    // test fonction createBounty()
     it("T1::createBounty()", async() => {  
-        const txCreate1 = await instance.createBounty("Job Description from", 3, "ETH", {from: alice})  //           
+        const txCreate1 = await instance.createBounty("Job Description from Alice", 3, "ETH", {from: alice})           
         var bountyIdx = await instance.bountyIndex()
 		const workItem = await instance.bountyList(0)
 		var eventEmitted = false
@@ -46,6 +42,7 @@ contract('Bounty', function(accounts) {
         assert.equal(bountyIdx, Number(new BN(1)), 'Bounty id was NOT incremented')
 		assert.equal(workItem.bountyId, 0, 'Bounty Id should be zero for the 1st item')
 		assert.equal(workItem.poster, alice, 'Alice should be the job poster')
+		assert.equal(workItem.jobDescription, "Job Description from Alice", 'the JD was not properly set')
 		assert.equal(workItem.accepted, false, 'Work should not be accepted yet')
 
 		// verify that we cannot create a bounty w/ a empty work description
@@ -63,7 +60,7 @@ contract('Bounty', function(accounts) {
         } 
         assert.equal(eventEmitted, false, 'Creating a bounty with a zero payout should NOT emit an event')
     })
-	
+	// test fonction viewMyBounties()
 	it("T2::viewMyBounties()", async() => {
 		await instance.createBounty("Job Description 1 from Alice", 1, "ETH", {from: alice}) 
 		await instance.createBounty("Job Description 1 from Bob", 1, "ETH", {from: bob})
@@ -79,7 +76,8 @@ contract('Bounty', function(accounts) {
 		assert.equal(bobList[1], 3, 'Bounty Id should be 3 for Bob 2nd item')
     })
 	
-	// Test creation of several bounties by the same poster; test the submission of one hunter to several bounties
+	// Test creation of several bounties by the same poster; 
+	// Test the submission of one hunter to several bounties
 	it("T3::submitWork() & submissionList", async() => {
 		// Alice creates 2 bounties; Joseph creates 1 bounty
 		await instance.createBounty("Job Description from Alice - JD0", 1, "ETH", {from: alice}) 
@@ -104,6 +102,7 @@ contract('Bounty', function(accounts) {
 		assert.equal(workSub3.submission, "Submission for Joseph JD0 by Charles", 'this is not Charles submission for workItem')
     })
 
+    // test acceptWork function
     it("T4::acceptWork()", async() => {
 		await instance.createBounty("Job Description from Alice", 2, "ETH", {from: alice})
 		// work submission from 2 jobhunters
@@ -117,15 +116,16 @@ contract('Bounty', function(accounts) {
         const workItem = await instance.bountyList(0)		
 
         assert(workItem.accepted, 'Work should BE accepted')
-		assert.equal(payout, 2, 'Payout amount should be 5 units')
+		assert.equal(payout, 2, 'Payout amount should be 2 ETH')
     })	
 
+    // test circuit-breaker feature
     it("T5::stopContract()", async() => {
-    	// Alice creates 2 bounties; 
+    	// Alice creates 2 bounties 
 		await instance.createBounty("Job Description from Alice - JD0", 1, "ETH", {from: alice}) 
 		await instance.createBounty("Job Description from Alice - JD1", 1, "ETH", {from: alice}) 
     	
-    	// verify submit op b4 stopped contract
+    	// verify submit op before stopped contract
     	await instance.submitWork(0, "Submission for Alice JD0 by Bob", {from: bob})
     	//
     	const owner = await instance.owner()
