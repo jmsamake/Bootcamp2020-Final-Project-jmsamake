@@ -184,10 +184,14 @@ contract Bounty {
      success = false;
      // verify that work is NOT submitted for already closed bounty
      // verify the submitter is NOT the poster of the bounty
-     if (!bountyList[_bountyId].accepted && !bountyList[_bountyId].poster == msg.sender) {
-       submissionList[_bountyId].push(WorkSubmission({submitter: msg.sender, submission: _workSubmission}));
-       success = true;
+     if (bountyList[_bountyId].accepted || bountyList[_bountyId].poster == msg.sender) {      
+       success = false;
      }
+     else {
+        submissionList[_bountyId].push(WorkSubmission({submitter: msg.sender, submission: _workSubmission}));
+        success = true;
+     }
+
   }
 
   /// @notice allows a job poster to accept a work proposal submitted by a job hunter
@@ -221,7 +225,7 @@ contract Bounty {
      
      address tempAddr = msg.sender;
      uint256 ethAmount = pendingPayOut[tempAddr];
-     if (unitAmount == 0)
+     if (ethAmount == 0)
        return 0;
 
      // Effects prior to Interaction, prevent Re-Entrancy attack
