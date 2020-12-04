@@ -2,3 +2,11 @@
 Bounty contract deployed on Rinkeby testnet
 
 contract address:    0x22E09EA75D2E179380ee06ddc48d415E349Ca7F8
+
+*Note: 
+1-) when testing on Rinkeby, be sure that the address above is specified in
+the contract's abi (Bounty.json); the frontend component will automatically read it
+from network id "4" in the file.
+
+2-) you should have 2 different EOA(i.e one for posting, the othe for submitting)
+connected to rinkeby via metamask w/ enough testing eth.
