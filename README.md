@@ -42,4 +42,8 @@ $ npm install
 $ truffle compile
 $ truffle migrate --reset
 $ yarn start   # will launch the client on http://localhost:3000/  
+
+*Note: insure that you have your acconts from ganache connected on metamask to test the frontend.
+You can use 2 acconts, one acting as a job poster et the other as a job hunter
+
    
