@@ -5,13 +5,19 @@ Description: Bounty contract implements a dAPP that allows people to post and su
 
 Use cases:
 
-Job/bounty poster
+Job/bounty poster:
 1. create work bounties; the same user can create 1 or more bounties; several different user can post bounties
 2. a work bounty will have a jb/work description and a bounty payout amount
 3. User can view a listing of all the bounties he posted
 4. User can review the work submissions proposed for his bounty
 5. User can accept or reject a given work submission
 6. Accepting a work submission will automatically pay the submitter the amount proposed for the bounty
+7. bounty is closed once the work is accepted
+
+Job/bounty hunter:
+1. can submit work for any of the bounties listed on the system;
+2. can submit several proposals for the same bounty;
+3. is automatically paid the bounty upon his work accepted by a poster.
 
 ## directory structure
 
