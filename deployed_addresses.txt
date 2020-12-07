@@ -10,3 +10,7 @@ from network id "4" in the file.
 
 2-) you should have 2 different EOA(i.e one for posting, the othe for submitting)
 connected to rinkeby via metamask w/ enough testing eth.
+
+# Run client
+- cd to root of projet
+$ yarn start
