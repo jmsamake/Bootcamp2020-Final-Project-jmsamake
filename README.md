@@ -56,5 +56,6 @@ You can use 2 acconts, one acting as a job poster et the other as a job hunter
 - insure your metamask account is connected to Rinkeby
 - $ yarn start   # will launch the client on http://localhost:3000/ 
 - app will interact w/ contract in Rinkeby @ address: 0x22E09EA75D2E179380ee06ddc48d415E349Ca7F8
+- you can check the tansactions on https://rinkeby.etherscan.io/
 
    
