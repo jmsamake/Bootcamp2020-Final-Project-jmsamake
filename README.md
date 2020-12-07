@@ -52,4 +52,9 @@ $ yarn start   # will launch the client on http://localhost:3000/
 *Note: insure that you have your acconts from ganache connected on metamask to test the frontend.
 You can use 2 acconts, one acting as a job poster et the other as a job hunter
 
+# run project by connecting to Rinkeby testnet
+- insure your metamask account is connected to Rinkeby
+- $ yarn start   # will launch the client on http://localhost:3000/ 
+- app will interact w/ contract in Rinkeby @ address: 0x22E09EA75D2E179380ee06ddc48d415E349Ca7F8
+
    
